@@ -37,6 +37,8 @@ class InvalidPlatformSpecified(Exception):
 def get_provisioner(molecule):
     if 'vagrant' in molecule._config.config:
         return VagrantProvisioner(molecule)
+    elif 'docker' in molecule._config.config:
+        return ProxmoxProvisioner(molecule)
     elif 'proxmox' in molecule._config.config:
         return ProxmoxProvisioner(molecule)
     else:
@@ -153,6 +155,59 @@ class BaseProvisioner(object):
         :return:
         """
         return
+
+
+class DockerProvisioner(BaseProvisioner):
+    def __init__(self, molecule):
+        super(DockerProvisioner, self).__init__(molecule)
+
+    @property
+    def name(self):
+        return 'docker'
+
+    @property
+    def instances(self):
+        pass
+
+    @property
+    def default_provider(self):
+        pass
+
+    @property
+    def default_platform(self):
+        pass
+
+    @property
+    def provider(self):
+        pass
+
+    @property
+    def platform(self):
+        pass
+
+    @property
+    def valid_providers(self):
+        pass
+
+    @property
+    def valid_platforms(self):
+        pass
+
+    @property
+    def ssh_config_file(self):
+        pass
+
+    def up(self, no_provision=True):
+        pass
+
+    def destroy(self):
+        pass
+
+    def status(self):
+        pass
+
+    def conf(self, vm_name=None, ssh_config=False):
+        pass
 
 
 class VagrantProvisioner(BaseProvisioner):
