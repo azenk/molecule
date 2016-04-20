@@ -37,6 +37,8 @@ molecule:
   ansible_config_template: ansible.cfg.j2
   rakefile_template: rakefile.j2
 
+  # provisioner to use
+  provisioner: vagrant
   # default provider to use when no --provider flag is specified
   # comment this out to default to the first in the provider list
   # default_provider: virtualbox
@@ -72,6 +74,12 @@ molecule:
       playbook: playbook.yml.j2
       spec_helper: spec_helper.rb.j2
       default_spec: default_spec.rb.j2
+
+# defaults for providers passed to Docker
+docker:
+  providers:
+    - name: docker
+      type: docker
 
 # defaults for providers passed to Vagrant
 vagrant:

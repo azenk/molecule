@@ -35,11 +35,11 @@ class InvalidPlatformSpecified(Exception):
 
 
 def get_provisioner(molecule):
-    if 'vagrant' in molecule._config.config:
+    if molecule._config.config['molecule']['provisioner'] == 'vagrant':
         return VagrantProvisioner(molecule)
-    elif 'docker' in molecule._config.config:
-        return ProxmoxProvisioner(molecule)
-    elif 'proxmox' in molecule._config.config:
+    elif molecule._config.config['molecule']['provisioner'] == 'docker':
+        return DockerProvisioner(molecule)
+    if molecule._config.config['molecule']['provisioner'] == 'proxmox':
         return ProxmoxProvisioner(molecule)
     else:
         return None

@@ -21,15 +21,22 @@
 import testtools
 
 import molecule.provisioners as provisioners
+from molecule.core import Molecule
 
 
 class TestDockerProvisioner(testtools.TestCase):
     def setUp(self):
         super(TestDockerProvisioner, self).setUp()
         # Setup mock molecule
-        self._mock_molecule = None
+        self._mock_molecule = Molecule(dict())
+        self._mock_molecule._config.load_defaults_file()
+        self._mock_molecule._config.config['molecule']['provisioner'] = 'docker'
+        self._mock_molecule._state = dict()
 
     def test_name(self):
         docker_provisioner = provisioners.DockerProvisioner(self._mock_molecule)
         # false values don't exist in arg dict at all
         self.assertEqual(docker_provisioner.name, 'docker')
+
+    def test_get_provisioner(self):
+        self.assertEqual(provisioners.get_provisioner(self._mock_molecule).name, 'docker')
